@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin_7"
+    tools:context=".authen_screen.fragment.RegisterFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp">
+
+        <!-- TODO: Update blank fragment layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_8"
+            android:orientation="vertical"
+            android:padding="@dimen/pading_15">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_30"
+                android:text="SIGN UP"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/textsize_18" />
+
+            <EditText
+                android:id="@+id/edt_SignUpUsername"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/custom_edittext_border"
+                android:hint="Username"
+                android:paddingStart="@dimen/padding_10"
+                android:paddingLeft="@dimen/padding_10"
+                android:textSize="@dimen/textsize_15" />
+
+            <EditText
+                android:id="@+id/edt_SignUpPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/custom_edittext_border"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/padding_10"
+                android:paddingLeft="@dimen/padding_10"
+                android:textSize="@dimen/textsize_15" />
+
+            <EditText
+                android:id="@+id/edt_Re-EnterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/custom_edittext_border"
+                android:hint="Re-Enter Password"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/padding_10"
+                android:paddingLeft="@dimen/padding_10"
+                android:textSize="@dimen/textsize_15" />
+
+            <EditText
+                android:id="@+id/edt_Fullname"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/custom_edittext_border"
+                android:hint="Fullname"
+                android:paddingStart="@dimen/padding_10"
+                android:paddingLeft="@dimen/padding_10"
+                android:textSize="@dimen/textsize_15" />
+
+            <EditText
+                android:id="@+id/edt_Address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/custom_edittext_border"
+                android:hint="Address"
+                android:paddingStart="@dimen/padding_10"
+                android:paddingLeft="@dimen/padding_10"
+                android:textSize="@dimen/textsize_15" />
+
+            <EditText
+                android:id="@+id/edt_Phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/custom_edittext_border"
+                android:hint="Phone"
+                android:paddingStart="@dimen/padding_10"
+                android:paddingLeft="@dimen/padding_10"
+                android:textSize="@dimen/textsize_15" />
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_flipper">
+                <Button
+                    android:id="@+id/btn_signUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@color/colorBlue"
+                    android:text="Sign up"
+                    android:textColor="@color/colorWhite" />
+
+                <ProgressBar
+                    android:indeterminateDrawable="@drawable/custom_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+            </ViewFlipper>
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
