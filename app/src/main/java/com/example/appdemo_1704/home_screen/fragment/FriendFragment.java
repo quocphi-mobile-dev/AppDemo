@@ -1,4 +1,4 @@
-package com.example.appdemo_1704.authen_screen.fragment;
+package com.example.appdemo_1704.home_screen.fragment;
 
 
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import com.example.appdemo_1704.R;
 
-public class HomeYourFragment extends Fragment {
+public class FriendFragment extends Fragment {
 
 
-    public HomeYourFragment() {
+    public FriendFragment() {
         // Required empty public constructor
     }
 
@@ -21,7 +21,7 @@ public class HomeYourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_your, container, false);
+        return inflater.inflate(R.layout.fragment_friend, container, false);
     }
 
 }

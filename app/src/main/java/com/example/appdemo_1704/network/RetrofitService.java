@@ -1,5 +1,6 @@
 package com.example.appdemo_1704.network;
 
+import com.example.appdemo_1704.json_models.request.CreateStatusSendForm;
 import com.example.appdemo_1704.json_models.request.LoginSendForm;
 import com.example.appdemo_1704.json_models.request.RegisterSendForm;
 import com.example.appdemo_1704.json_models.response.Status;
@@ -26,6 +27,13 @@ public interface RetrofitService {
     @GET(API.GET_ALL_POST)
     @Headers({API.HEADER})
     Call<List<Status>> getAllPost(@Query("userId") String userID);
+
+    @POST(API.CREATE_POST)
+    @Headers({API.HEADER})
+    // phương thức gọi "call" Trả về cái gì  ?  trả về 1 cái Status " tạo rồi k tạo nữa"
+    //đặt tên là createPost = > truyền vào cái gì ? cái gì trên API có thì làm : sau khi tryền vào thì kiểu dữ liệu cuẩ nó là gì
+    Call<Status> createPost(@Body CreateStatusSendForm sendForm);
+     // sau đó gọi ở fragment
 
 
 

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ViewFlipper;
 
 import com.example.appdemo_1704.R;
-import com.example.appdemo_1704.authen_screen.HomeActivity;
+import com.example.appdemo_1704.home_screen.HomeActivity;
 import com.example.appdemo_1704.dbcontext.RealmContext;
 import com.example.appdemo_1704.json_models.request.LoginSendForm;
 import com.example.appdemo_1704.json_models.response.UserInfo;
@@ -38,13 +38,14 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_login,container,false);
 
        edtUsername = view.findViewById(R.id.edt_SignInUsername);
        edtPassword = view.findViewById(R.id.edt_SignInpassword);
        btnLogin = view.findViewById(R.id.btn_signIn);
        viewFlipper = view.findViewById(R.id.view_flipper);
+
+       //
        retrofitService = RetrofitUtils.getInstance().createService(RetrofitService.class);
        addListener();
 

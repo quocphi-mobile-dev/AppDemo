@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGrey200"
-    tools:context=".activity.HomeFragment">
+    android:background="@color/colorLightGreen01"
+    tools:context=".home_screen.fragment.HomeFragment"
+    >
 
-
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
@@ -33,7 +34,7 @@
                     android:padding="@dimen/padding_5">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_profile"
+                        android:id="@+id/imv_avatar"
                         android:layout_width="@dimen/width_90"
                         android:layout_height="@dimen/height_100"
                         android:layout_marginStart="@dimen/margin_10"
@@ -44,7 +45,7 @@
                         app:civ_border_width="3dp" />
 
                     <EditText
-                        android:id="@+id/edt_yourmind"
+                        android:id="@+id/edt_content"
                         android:layout_width="@dimen/width_210"
                         android:layout_height="@dimen/height_75"
                         android:layout_marginStart="@dimen/margin_15"
@@ -52,15 +53,16 @@
                         android:layout_marginTop="@dimen/margin_10"
                         android:layout_marginEnd="@dimen/margin_70"
                         android:layout_marginRight="@dimen/margin_70"
-                        android:layout_toRightOf="@+id/iv_profile"
+                        android:layout_toRightOf="@+id/imv_avatar"
                         android:background="@drawable/custom_edittext_border2"
                         android:hint="Ban Dang Nghi Gi"
+                        android:lines="4"
                         android:paddingStart="@dimen/margin_10"
                         android:paddingLeft="@dimen/margin_10"
                         android:textSize="@dimen/text_size_18" />
 
                     <ImageView
-                        android:id="@+id/iv_post"
+                        android:id="@+id/imv_post"
                         android:layout_width="@dimen/width_35"
                         android:layout_height="@dimen/height_45"
                         android:layout_alignParentEnd="true"
@@ -70,10 +72,49 @@
                         android:layout_marginRight="@dimen/margin_10"
                         android:background="@drawable/ic_send_black"
                         android:padding="@dimen/padding_5" />
-
-
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+        <ViewFlipper
+            android:id="@+id/view_flipper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_15"
+                android:indeterminateDrawable="@drawable/custom_progress_bar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_15"
+                android:text="Không có dữ liệu"
+                android:textColor="@color/colorGray900"
+                android:textSize="@dimen/textsize_15">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_15"
+                android:text="Lỗi kết nối"
+                android:textColor="@color/colorAmber"
+                android:textSize="@dimen/textsize_15" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
 
 
             <android.support.v7.widget.RecyclerView
@@ -84,9 +125,11 @@
                 android:layout_marginLeft="@dimen/margin_10">
 
             </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
 
 
-</android.support.design.widget.CoordinatorLayout>
+        </ViewFlipper>
+
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

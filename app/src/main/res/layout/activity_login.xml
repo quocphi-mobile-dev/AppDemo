@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlueLight_two"
+        app:tabIndicatorColor="@color/colorBlue"
         >
 
     </android.support.design.widget.TabLayout>

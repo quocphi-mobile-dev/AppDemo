@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ViewFlipper;
 
 import com.example.appdemo_1704.R;
-import com.example.appdemo_1704.authen_screen.HomeActivity;
+import com.example.appdemo_1704.home_screen.HomeActivity;
 import com.example.appdemo_1704.dbcontext.RealmContext;
 import com.example.appdemo_1704.json_models.request.RegisterSendForm;
 import com.example.appdemo_1704.json_models.response.UserInfo;

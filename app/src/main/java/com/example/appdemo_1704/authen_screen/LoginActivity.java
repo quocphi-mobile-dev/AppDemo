@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.appdemo_1704.R;
 import com.example.appdemo_1704.authen_screen.adapter.ViewPagerAdapter;
 import com.example.appdemo_1704.dbcontext.RealmContext;
+import com.example.appdemo_1704.home_screen.HomeActivity;
 import com.example.appdemo_1704.json_models.response.UserInfo;
 
 public class LoginActivity extends AppCompatActivity  {
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void goToHome() {
-        startActivity(new Intent(this,HomeActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
