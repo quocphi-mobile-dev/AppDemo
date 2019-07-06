@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imv_cmtAvatar"
+        android:layout_width="76dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:src="@drawable/anh1"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="3dp" />
+    <TextView
+        android:layout_toRightOf="@+id/imv_cmtAvatar"
+        android:id="@+id/tv_cmtUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:text="Tên Người comment"/>
+    <TextView
+        android:layout_below="@id/tv_cmtUsername"
+        android:id="@+id/tv_cmtContent"
+        android:layout_toRightOf="@id/imv_cmtAvatar"
+        android:text="Nội dung username comment"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/textsize_15"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp" />
+
+</RelativeLayout>

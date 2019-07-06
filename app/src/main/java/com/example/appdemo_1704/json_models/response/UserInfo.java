@@ -7,6 +7,8 @@ import io.realm.RealmObject;
 public class UserInfo  extends RealmObject {
     @SerializedName("userId")
    private String userID;
+    @SerializedName("username")
+    private String userName;
     @SerializedName("fullName")
     private String fullname;
     @SerializedName("avatarUrl")
@@ -15,8 +17,17 @@ public class UserInfo  extends RealmObject {
     public UserInfo() {
     }
 
-    public UserInfo(String userID, String fullname, String avatarUrL) {
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public UserInfo(String userID, String userName, String fullname, String avatarUrL) {
         this.userID = userID;
+        this.userName = userName;
         this.fullname = fullname;
         this.avatarUrL = avatarUrL;
     }

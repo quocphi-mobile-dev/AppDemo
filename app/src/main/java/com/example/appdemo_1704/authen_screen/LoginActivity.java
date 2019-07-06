@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.appdemo_1704.R;
-import com.example.appdemo_1704.authen_screen.adapter.ViewPagerAdapter;
+import com.example.appdemo_1704.authen_screen.adapter.AuthenViewPagerAdapter;
 import com.example.appdemo_1704.dbcontext.RealmContext;
 import com.example.appdemo_1704.home_screen.HomeActivity;
 import com.example.appdemo_1704.json_models.response.UserInfo;
@@ -15,18 +15,15 @@ import com.example.appdemo_1704.json_models.response.UserInfo;
 public class LoginActivity extends AppCompatActivity  {
     TabLayout tabLayout;
     ViewPager viewPager;
-    ViewPagerAdapter viewPagerAdapter;
+    AuthenViewPagerAdapter authenViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
         checkLogin();
         init();
     }
-
     private void checkLogin() {
         UserInfo userInfo = RealmContext.getInstance().getUser();
         if(userInfo != null){
@@ -39,11 +36,12 @@ public class LoginActivity extends AppCompatActivity  {
         finish();
     }
 
+
     private void init() {
     tabLayout = findViewById(R.id.tab_layout);
     viewPager = findViewById(R.id.view_pager);
-    viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-    viewPager.setAdapter(viewPagerAdapter);
+    authenViewPagerAdapter = new AuthenViewPagerAdapter(getSupportFragmentManager());
+    viewPager.setAdapter(authenViewPagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
     }
 

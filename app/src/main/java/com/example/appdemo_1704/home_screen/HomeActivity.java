@@ -2,14 +2,11 @@ package com.example.appdemo_1704.home_screen;
 
 import android.graphics.PorterDuff;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.example.appdemo_1704.R;
 import com.example.appdemo_1704.home_screen.adapter.ViewPageAdapterHome;
-
 
 public class HomeActivity extends AppCompatActivity {
     TabLayout tabLayout;
@@ -29,26 +26,23 @@ public class HomeActivity extends AppCompatActivity {
         viewPageAdapterHome = new ViewPageAdapterHome(getSupportFragmentManager());
         viewPager.setAdapter(viewPageAdapterHome);
         tabLayout.setupWithViewPager(viewPager);
-
         tabLayout.getTabAt(0).setIcon(R.drawable.news_feeds);
         tabLayout.getTabAt(1).setIcon(R.drawable.friends);
+        tabLayout.getTabAt(2).setIcon(R.drawable.discuss_issue);
+        tabLayout.getTabAt(3).setIcon(R.drawable.man_user);
         tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_IN);
-
-
-       tabLayout.addOnTabSelectedListener(
+        tabLayout.addOnTabSelectedListener(
                new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             super.onTabSelected(tab);
-
             tab.getIcon().setColorFilter(getResources().getColor(R.color.colorBlue), PorterDuff.Mode.SRC_IN);
         }
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
             super.onTabUnselected(tab);
-
             tab.getIcon().setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_IN);
         }
 

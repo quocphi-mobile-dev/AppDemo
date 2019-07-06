@@ -5,4 +5,7 @@ public class Item  {
     private int id;
     private String Username;
     private String createDate;
+    public Item(int id) {
+        this.id = id;
+    }
 }

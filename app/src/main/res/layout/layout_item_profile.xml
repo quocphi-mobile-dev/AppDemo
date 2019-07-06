@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".home_screen.fragment.HomeFragment">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLightGreen01">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <de.hdodenhof.circleimageview.CircleImageView
+          android:id="@+id/imv_avatar1"
+          android:layout_width="150dp"
+          android:layout_height="150dp"
+          android:layout_marginTop="@dimen/height_30"
+          android:src="@drawable/anh1"
+          android:layout_centerHorizontal="true"
+          app:civ_border_color="@color/colorPrimary"
+          app:civ_border_width="3dp" />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Tên người dùng"
+          android:textSize="@dimen/margin_20"
+          android:textColor="@color/colorRed400"
+          android:layout_marginTop="10dp"
+          android:layout_below="@+id/imv_avatar1"
+          android:layout_centerHorizontal="true"
+          android:id="@+id/tv_userName"
+          />
+      <LinearLayout
+          android:id="@+id/ll_address"
+          android:layout_below="@+id/tv_userName"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <android.support.v7.widget.AppCompatImageView
+              android:id="@+id/imv_location"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:src="@drawable/ic_location_on_black_"
+              android:layout_marginStart="10dp"
+              android:layout_marginLeft="10dp" />
+          <TextView
+              android:layout_marginStart="@dimen/margin_20"
+              android:id="@+id/tv_addres"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:text="Địa chỉ"
+              android:layout_marginLeft="@dimen/margin_20" />
+      </LinearLayout>
+      <LinearLayout
+          android:layout_below="@id/ll_address"
+          android:id="@+id/ll_phone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <ImageView
+              android:id="@+id/imv_phone"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+             android:src="@drawable/ic_phone_black"
+              android:layout_marginStart="10dp"
+              android:layout_marginLeft="10dp" />
+          <TextView
+              android:layout_marginStart="@dimen/margin_20"
+              android:id="@+id/tv_phoneNumber"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:text="số điện thoại "
+              android:layout_marginLeft="@dimen/margin_20" />
+      </LinearLayout>
+      <LinearLayout
+          android:layout_below="@id/ll_phone"
+          android:id="@+id/ll_birthday"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <ImageView
+              android:id="@+id/imv_birthday"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:src="@drawable/ic_card_giftcard_black"
+              android:layout_marginStart="10dp"
+              android:layout_marginLeft="10dp" />
+          <TextView
+              android:layout_marginStart="@dimen/margin_20"
+              android:id="@+id/tv_birthday"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:text="Ngày sinh "
+              android:layout_marginLeft="@dimen/margin_20" />
+      </LinearLayout>
+
+  </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_5"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_5">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imv_avatar"
+                            android:layout_width="@dimen/width_90"
+                            android:layout_height="@dimen/height_100"
+                            android:layout_marginStart="@dimen/margin_10"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:src="@drawable/anh1"
+                            app:civ_border_color="@color/colorPrimary"
+                            app:civ_border_width="3dp" />
+
+                        <EditText
+                            android:id="@+id/edt_content"
+                            android:layout_width="@dimen/width_210"
+                            android:layout_height="@dimen/height_75"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:layout_marginEnd="@dimen/margin_70"
+                            android:layout_marginRight="@dimen/margin_70"
+                            android:layout_toRightOf="@+id/imv_avatar"
+                            android:background="@drawable/custom_edittext_border2"
+                            android:hint="Ban Dang Nghi Gi"
+                            android:lines="4"
+                            android:paddingStart="@dimen/margin_10"
+                            android:paddingLeft="@dimen/margin_10"
+                            android:textSize="@dimen/text_size_18" />
+
+                        <ImageView
+                            android:id="@+id/imv_post"
+                            android:layout_width="@dimen/width_35"
+                            android:layout_height="@dimen/height_45"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/margin_30"
+                            android:layout_marginEnd="@dimen/margin_10"
+                            android:layout_marginRight="@dimen/margin_10"
+                            android:background="@drawable/ic_send_black"
+                            android:padding="@dimen/padding_5" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:layout_marginLeft="@dimen/margin_10">
+
+                </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

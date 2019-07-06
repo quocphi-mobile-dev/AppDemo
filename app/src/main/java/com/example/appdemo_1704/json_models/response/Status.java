@@ -29,10 +29,11 @@ public class Status {
     private int numberComment;
 
     @SerializedName("isLike")
-    private Boolean isLike;
+    private boolean isLike;
 
-    public Status(String postId, String author, String authorName, String authorAvatar,
-                  String content, String createDate, int numberLike, int numberComment, Boolean isLike) {
+
+    public Status(String postId, String author, String authorName, String authorAvatar, String content,
+                  String createDate, int numberLike, int numberComment, boolean isLike) {
         this.postId = postId;
         this.author = author;
         this.authorName = authorName;
@@ -108,11 +109,12 @@ public class Status {
         this.numberComment = numberComment;
     }
 
-    public Boolean getLike() {
+    public boolean isLike() {
         return isLike;
     }
 
-    public void setLike(Boolean like) {
+
+    public void setLike(boolean like) {
         isLike = like;
     }
 
@@ -130,6 +132,7 @@ public class Status {
                 ", isLike=" + isLike +
                 '}';
     }
+
 
 
 }

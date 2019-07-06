@@ -54,6 +54,7 @@ public class RegisterFragment extends Fragment {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // tạo các đối tướng để chứa dữ liệu vừa nhập  => 1 method để hứng chúng nó
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
                 String repassword = edtRePassword.getText().toString();
@@ -69,6 +70,7 @@ public class RegisterFragment extends Fragment {
                 } else if (fullname.isEmpty()) {
                     Utils.showToast(getContext(), "Fullname must be  no empty ");
                 } else {
+                    // nếu tất cả đề k rỗng thì cho chúng nó vào hàm register hứng các dữ liệu đó
                     register(username, password, repassword, fullname, address, phone);
                 }
             }
@@ -89,17 +91,23 @@ public class RegisterFragment extends Fragment {
         retrofitService = RetrofitUtils.getInstance().createService(RetrofitService.class);
     }
     // goi api login
-
+// Làm việc từ cái method hứng dữ liệu đã nhập
     private void register(String username, String password, String repassword, String fullname, String address, String phone) {
+        // tạo 1 cái form chứa thông tin (form này dựa trên API )  để gửi lên server => truyền các dữ liệu đó vào
         RegisterSendForm registerSendForm = new RegisterSendForm(username, password, fullname, address, phone);
         viewFlipper.setDisplayedChild(MODE_LOADING);
+        //Gửi lên. các phương thức gửi lên nằm ở 1 Interface, khởi tạo nó ra  => truyền dữ liệu đó vào  =>
+        // sau đó truyền dữ liệu muốn đưa lên server => tạo một luồng mới để chấp nhận việc này
         retrofitService.register(registerSendForm).enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                // Khi API trả về một đống json =>  phân tích đống đấy => tạo một class, muốn kiểm tra được nó thì nó
+                // phải kế  thừa RealmObject + 1 constructor rỗng
                 UserInfo userInfo = response.body();
                 if (response.code() == 200 && userInfo != null) {
                     // Dung
                     Utils.showToast(getActivity(), "Register  Successfully !!");
+                    // tạo đúng được tài khoản mình sẽ add nó vào Realm
                     RealmContext.getInstance().addUser(userInfo);
                     goToHome();
                 } else {

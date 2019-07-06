@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="6"
+        android:padding="10dp"
+        android:id="@+id/edt_content"
+        android:text="đây là nội dung "
+        android:background="@drawable/custom_edittext_bacgroud"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_save"
+        android:text="Lưu"
+        android:layout_below="@+id/edt_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorWhiteTransparent"/>
+    <Button
+        android:background="@color/colorWhiteTransparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_cancel"
+        android:layout_toStartOf="@+id/btn_save"
+        android:layout_below="@+id/edt_content"
+        android:layout_marginTop="10dp"
+        android:text="Hủy"
+        android:layout_toLeftOf="@+id/btn_save" />
+
+</RelativeLayout>

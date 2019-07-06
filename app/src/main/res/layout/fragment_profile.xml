@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".home_screen.fragment.ProfileFragment">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLightGreen01">
+    </android.support.v4.widget.NestedScrollView>
+
+        <com.glide.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:background="@color/colorWhiteTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view1"
+                android:layout_below="@id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imv_avatar1"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/height_30"
+                        android:src="@drawable/anh1"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="3dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imv_chage_avatar"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_above="@+id/tv_userName"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="246dp"
+                        android:layout_marginLeft="246dp"
+                        android:layout_marginEnd="127dp"
+                        android:layout_marginRight="127dp"
+                        android:layout_marginBottom="-5dp"
+                        android:src="@drawable/ic_camera_alt_black_24dp"
+                        app:civ_border_width="3dp" />
+
+                    <TextView
+                        android:id="@+id/tv_userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imv_avatar1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:text="Tên người dùng"
+                        android:textColor="@color/colorRed400"
+                        android:textSize="@dimen/margin_20" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_userName"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/imv_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_location_on_black_" />
+
+                        <TextView
+                            android:id="@+id/tv_addres"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_20"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:text="Địa chỉ" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ll_address"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imv_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_phone_black" />
+
+                        <TextView
+                            android:id="@+id/tv_phoneNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_20"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:text="số điện thoại " />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ll_phone"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imv_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_card_giftcard_black" />
+
+                        <TextView
+                            android:id="@+id/tv_birthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/margin_20"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:text="Ngày sinh " />
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_status"
+        android:layout_below="@id/card_view1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_10">
+        </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>
+

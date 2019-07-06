@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.appdemo_1704.authen_screen.fragment.LoginFragment;
 import com.example.appdemo_1704.authen_screen.fragment.RegisterFragment;
-
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+// tạo một class để căng các viewpager : cần phải kế thừa FragmentPagerAdapter
+public class AuthenViewPagerAdapter extends FragmentPagerAdapter {
     private final int NUMBER_PAGE = 2;
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public AuthenViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -25,7 +25,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
-
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
@@ -37,7 +36,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
-
 
     @Override
     public int getCount() {
