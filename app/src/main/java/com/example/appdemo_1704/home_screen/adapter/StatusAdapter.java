@@ -31,10 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHolder>{
     private OnItemStatusClickListener listener;
       UserInfo userInfo;
-    // bước 1: tạo 1 list : chứa 1 list các statust => contrustor cho nó
     ArrayList<Status> statusList;
-    // tạo
-// vì tạo bên HomeFragment nên cái listener này => chính là sự kiên click bên đó
+
     public StatusAdapter(OnItemStatusClickListener listener, ArrayList<Status> statusList ) {
         this.listener = listener;
         this.statusList = statusList;
@@ -50,14 +48,11 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHold
     }
     @Override
     public int getItemCount() {
-        // cout  = số lượng
         return statusList.size();
     }
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-
-        // bind  view
         myViewHolder.bindView(statusList.get(i));
 
     }
@@ -112,14 +107,13 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHold
                                    listener.onEditStatus(status);
                                     break;
                                 case R.id.option_delete:
-                                    // xóa  chưa làm
                                     listener.onDeleteStatus(status);
                                     break;
                             }
                             return false;
                         }
                     });
-                    popupMenu.show(); //showing popup menu
+                    popupMenu.show();
                 }
             });
         }

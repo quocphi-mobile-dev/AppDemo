@@ -42,4 +42,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation "com.github.firdausmaulan:GlideSlider:1.4.1"
 
+    implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+    implementation 'com.github.rubensousa:gravitysnaphelper:1.5'
+
 }

@@ -31,8 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(R.drawable.discuss_issue);
         tabLayout.getTabAt(3).setIcon(R.drawable.man_user);
         tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_IN);
-        tabLayout.addOnTabSelectedListener(
-               new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
 
         @Override
         public void onTabSelected(TabLayout.Tab tab) {

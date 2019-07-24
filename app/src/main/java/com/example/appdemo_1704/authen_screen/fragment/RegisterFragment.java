@@ -44,7 +44,7 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-        init(view);
+        initView(view);
         addListener();
         return view;
 
@@ -78,7 +78,7 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    private void init(View view) {
+    private void initView(View view) {
         edtUsername = view.findViewById(R.id.edt_SignUpUsername);
         edtPassword = view.findViewById(R.id.edt_SignUpPassword);
         edtRePassword = view.findViewById(R.id.edt_Re_EnterPassword);
@@ -87,9 +87,10 @@ public class RegisterFragment extends Fragment {
         edtPhone = view.findViewById(R.id.edt_Phone);
         btnSignUp = view.findViewById(R.id.btn_signUp);
         viewFlipper = view.findViewById(R.id.view_flipper);
-
         retrofitService = RetrofitUtils.getInstance().createService(RetrofitService.class);
     }
+
+
     // goi api login
 // Làm việc từ cái method hứng dữ liệu đã nhập
     private void register(String username, String password, String repassword, String fullname, String address, String phone) {
@@ -125,6 +126,8 @@ public class RegisterFragment extends Fragment {
             }
         });
     }
+
+
 
     private void goToHome() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);

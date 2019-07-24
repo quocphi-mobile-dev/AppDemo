@@ -1,9 +1,12 @@
 package com.example.appdemo_1704.network;
 
+import com.example.appdemo_1704.json_models.request.CommentStatuSendForm;
 import com.example.appdemo_1704.json_models.request.CreateStatusSendForm;
 import com.example.appdemo_1704.json_models.request.LikeStatustSendForm;
 import com.example.appdemo_1704.json_models.request.LoginSendForm;
 import com.example.appdemo_1704.json_models.request.UpdateAvatarUri;
+import com.example.appdemo_1704.json_models.response.CommentResponse;
+import com.example.appdemo_1704.json_models.response.GroupChat;
 import com.example.appdemo_1704.json_models.response.ProfileUser;
 import com.example.appdemo_1704.json_models.request.RegisterSendForm;
 import com.example.appdemo_1704.json_models.request.UpdateStatusSendForm;
@@ -41,8 +44,7 @@ public interface RetrofitService {
 
     @POST(API.CREATE_POST)
     @Headers({API.HEADER})
-        // phương thức gọi "call" Trả về cái gì  ?  trả về 1 cái Status " tạo rồi k tạo nữa"
-        //đặt tên là createPost = > truyền vào cái gì ? cái gì trên API có thì làm : sau khi tryền vào thì kiểu dữ liệu cuẩ nó là gì
+
     Call<Status> createPost(@Body CreateStatusSendForm sendForm);
     // sau đó gọi ở fragment
 
@@ -53,12 +55,6 @@ public interface RetrofitService {
 
     @GET(API.GET_ALL_FRIEND)
     Call<ArrayList<Friend>> getAllFriend(@Query("userId") String userID);
-
-    // lấy cmt về
-    @GET(API.GET_ALL_COMMENT)
-    @Headers({API.HEADER})
-    Call<ArrayList<Comment>> getAllComment(@Query("postId") String postID);
-
     // updata post
     @PUT(API.UPDATE_STATUS)
     @Headers({API.HEADER})
@@ -69,10 +65,22 @@ public interface RetrofitService {
      // cập nhật ảnh bìa
     @GET(API.GET_PROFILE)
     Call<ProfileUser> getProfile (@Query("username") String username , @Header("userId") String userID);
-
+    // update avatar
     @PUT(API.UPDATE_AVATAR)
     @Headers({API.HEADER})
     Call<ProfileUser> upDateAvatar (@Body UpdateAvatarUri sendAvatarUri);
 
+    // create commmet
+    @POST(API.CREATE_COMMENT)
+    @Headers({API.HEADER})
+    Call<CommentResponse>  commentStatus(@Body CommentStatuSendForm sendForm);
+
+    // get all comment
+    @GET(API.GET_ALL_COMMENT)
+    @Headers({API.HEADER})
+    Call<List<Comment>> getAllComment(@Query("postId") String postId);
+    // get group
+    @GET(API.GET_GROUP)
+    Call<ArrayList<GroupChat>> getGroup(@Query("userId") String userId);
 
 }

@@ -1,158 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home_screen.fragment.ProfileFragment">
+    tools:context=".home_screen.fragment.ProfileFragment"
+    android:id="@+id/refresh_layout">
 
-
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorLightGreen01">
-    </android.support.v4.widget.NestedScrollView>
+        android:layout_height="wrap_content">
 
-        <com.glide.slider.library.SliderLayout
-            android:id="@+id/slider"
-            android:background="@color/colorWhiteTransparent"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_view1"
+            <com.glide.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+            <ImageView
+                android:id="@+id/iv_update_cover"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-40dp"
                 android:layout_below="@id/slider"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true" />
+
+            <TextView
+                android:id="@+id/tv_menu"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/slider"
+                android:gravity="center"
+                android:text="&#8942;"
+                android:textSize="20sp"
+                android:layout_alignParentRight="true" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_ava"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/slider"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-100dp"
+                app:civ_border_color="@color/colorWhite"
+                android:src="@drawable/anh1"
+                app:civ_border_width="4dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_camera"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/iv_ava"
+                android:layout_marginTop="-45dp"
+                android:layout_toEndOf="@+id/iv_ava"
+                android:layout_marginStart="-55dp"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                app:civ_border_color="@color/colorWhite"
+                app:civ_border_width="1.5dp"
+                android:layout_toRightOf="@+id/iv_ava"
+                android:layout_marginLeft="-55dp" />
+
+            <TextView
+                android:id="@+id/tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding_5"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="2dp">
+                android:layout_below="@+id/iv_ava"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Username"
+                android:textColor="@color/colorBlack"
+                android:textSize="23dp"
+                android:textStyle="bold" />
 
-                <RelativeLayout
+            <LinearLayout
+                android:id="@+id/item_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_username"
+                android:paddingStart="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:background="@drawable/custom_backgroud_pressed"
+                android:paddingLeft="20dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location_on_black_" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Address"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_address"
+                android:paddingStart="20dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+
+                android:paddingLeft="20dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_phone_black" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Phone number"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_phone"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_card_giftcard_black" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Date of Birth"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@+id/item_birthday"
+                android:layout_marginTop="15dp"
+               />
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/newfeeds_ava"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/custom_edittext_bacgroud" />
+
+                    <TextView
+                        android:id="@+id/tv_post"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_edittext_bacgroud"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="what do you think"
+                        android:textSize="20sp"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="20dp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@+id/linear"
+                    android:layout_marginTop="15dp"/>
+
+                <ViewFlipper
+                    android:id="@+id/flipper_status"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imv_avatar1"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/height_30"
-                        android:src="@drawable/anh1"
-                        app:civ_border_color="@color/colorPrimary"
-                        app:civ_border_width="3dp" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imv_chage_avatar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_above="@+id/tv_userName"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginStart="246dp"
-                        android:layout_marginLeft="246dp"
-                        android:layout_marginEnd="127dp"
-                        android:layout_marginRight="127dp"
-                        android:layout_marginBottom="-5dp"
-                        android:src="@drawable/ic_camera_alt_black_24dp"
-                        app:civ_border_width="3dp" />
-
-                    <TextView
-                        android:id="@+id/tv_userName"
+                    <ProgressBar
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/imv_avatar1"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:text="Tên người dùng"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:indeterminateDrawable="@drawable/custom_progress_bar"
+                        android:paddingBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="no data"
                         android:textColor="@color/colorRed400"
-                        android:textSize="@dimen/margin_20" />
+                        android:textSize="17dp" />
 
-                    <LinearLayout
-                        android:id="@+id/ll_address"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_status"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_userName"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent">
 
-                        <android.support.v7.widget.AppCompatImageView
-                            android:id="@+id/imv_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_location_on_black_" />
+                    </android.support.v7.widget.RecyclerView>
 
-                        <TextView
-                            android:id="@+id/tv_addres"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/margin_20"
-                            android:layout_marginLeft="@dimen/margin_20"
-                            android:text="Địa chỉ" />
-                    </LinearLayout>
+                </ViewFlipper>
 
-                    <LinearLayout
-                        android:id="@+id/ll_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ll_address"
-                        android:orientation="horizontal">
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
-                        <ImageView
-                            android:id="@+id/imv_phone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_phone_black" />
-
-                        <TextView
-                            android:id="@+id/tv_phoneNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/margin_20"
-                            android:layout_marginLeft="@dimen/margin_20"
-                            android:text="số điện thoại " />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_birthday"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ll_phone"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imv_birthday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_card_giftcard_black" />
-
-                        <TextView
-                            android:id="@+id/tv_birthday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/margin_20"
-                            android:layout_marginLeft="@dimen/margin_20"
-                            android:text="Ngày sinh " />
-                    </LinearLayout>
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_status"
-        android:layout_below="@id/card_view1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginLeft="@dimen/margin_10">
-        </android.support.v7.widget.RecyclerView>
-
-
-</RelativeLayout>
-
+</android.support.v4.widget.SwipeRefreshLayout>
