@@ -16,6 +16,15 @@ public class UpdateStatusDialog extends Dialog {
     EditText editText;
     Button btn_save;
     Button btn_cancel;
+
+
+
+
+
+
+
+
+
     OnUpdateDiaglogListener listener;
 
     public UpdateStatusDialog(@NonNull Context context, OnUpdateDiaglogListener listener) {

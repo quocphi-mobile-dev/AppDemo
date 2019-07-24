@@ -7,11 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.appdemo_1704.R;
+import com.example.appdemo_1704.interf.OnItemFriendClickListener;
 import com.example.appdemo_1704.json_models.response.Friend;
+import com.example.appdemo_1704.json_models.response.UserInfo;
 
 import java.util.ArrayList;
 
@@ -21,23 +24,28 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
     // trong này chưa 1 cái array list Friend // khai báo xong khởi tạo constructor cho nó
 
     private ArrayList<Friend> friendList;
+    OnItemFriendClickListener listener;
 
     public FriendAdapter(ArrayList<Friend> friendList) {
         this.friendList = friendList;
+    }
+
+    public FriendAdapter(ArrayList<Friend> friendList, OnItemFriendClickListener listener) {
+        this.friendList = friendList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // phương thức chính => trả về cái gì
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_item_friend, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext())
+        .inflate(R.layout.layout_item_friend, viewGroup, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-
-        // làm gi ở đây => từng cái view thì xem đc cái gì
         myViewHolder.bindView(friendList.get(i));
     }
 
@@ -48,10 +56,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         Context context;
-        // để lầm gì => để get cái ảnh
         CircleImageView imvAvatar;
         TextView tvFullName;
         TextView tvMine;
+        RelativeLayout relativeLayout;
+        UserInfo userInfo;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +70,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
 
             tvFullName = itemView.findViewById(R.id.tv_full_name);
             tvMine = itemView.findViewById(R.id.tv_mine);
+            relativeLayout = itemView.findViewById(R.id.itemFriend);
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.viewProfileFriend(userInfo);
+                }
+            });
+
 
         }
 
@@ -69,6 +86,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
             Glide.with(context).load(friend.getAvatar()).into(imvAvatar);
             tvFullName.setText(friend.getFullName());
             Log.d("phi", tvFullName.toString());
+
             if (friend.isYou()) {
 
                 tvMine.setVisibility(View.VISIBLE);

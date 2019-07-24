@@ -1,15 +1,15 @@
 package com.example.appdemo_1704.json_models.response;
 
 import com.google.gson.annotations.SerializedName;
-
 public class Comment {
     @SerializedName("userAvatar")
     private String userAvatar;
+
     @SerializedName("fullName")
     private String fullName;
+
     @SerializedName("content")
     private String content;
-
 
     public Comment(String userAvatar, String fullName, String content) {
         this.userAvatar = userAvatar;
@@ -39,15 +39,6 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "userAvatar='" + userAvatar + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", content='" + content + '\'' +
-                '}';
     }
 }
 

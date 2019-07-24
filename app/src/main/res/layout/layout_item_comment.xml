@@ -1,39 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imv_cmtAvatar"
-        android:layout_width="76dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_10"
-        android:src="@drawable/anh1"
-        app:civ_border_color="@color/colorPrimary"
-        app:civ_border_width="3dp" />
-    <TextView
-        android:layout_toRightOf="@+id/imv_cmtAvatar"
-        android:id="@+id/tv_cmtUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/colorBlack"
-        android:textSize="20sp"
-        android:text="Tên Người comment"/>
-    <TextView
-        android:layout_below="@id/tv_cmtUsername"
-        android:id="@+id/tv_cmtContent"
-        android:layout_toRightOf="@id/imv_cmtAvatar"
-        android:text="Nội dung username comment"
-        android:layout_width="wrap_content"
-        android:textSize="@dimen/textsize_15"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_ava"
+                android:layout_width="76dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="10dp"
+                app:civ_border_color="@color/colorBlack"
+                app:civ_border_width="0.5dp"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/iv_ava"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/custom_item_comment"
+                android:id="@+id/linear_cmt"
+                android:paddingStart="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:layout_toRightOf="@id/iv_ava"
+                android:layout_marginRight="30dp">
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="user NAME"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="datetime"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear_cmt"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="120dp"
+                    android:text="Like"
+                    android:textColor="@color/colorGray900"
+                    android:layout_marginLeft="120dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Reply"
+                    android:textColor="@color/colorGray900"
+                    android:layout_marginLeft="20dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.appdemo_1704.home_screen.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,8 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.appdemo_1704.R;
 import com.example.appdemo_1704.common.UpdateStatusDialog;
 import com.example.appdemo_1704.dbcontext.RealmContext;
+import com.example.appdemo_1704.home_screen.CommentActivity;
 import com.example.appdemo_1704.home_screen.adapter.StatusAdapter;
 import com.example.appdemo_1704.interf.OnItemStatusClickListener;
 import com.example.appdemo_1704.interf.OnUpdateDiaglogListener;
@@ -35,11 +40,13 @@ import com.example.appdemo_1704.json_models.response.UserInfo;
 import com.example.appdemo_1704.network.RetrofitService;
 import com.example.appdemo_1704.network.RetrofitUtils;
 import com.example.appdemo_1704.utils.Utils;
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -124,10 +131,20 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
         // constructor chỉ mới có cái list thôi => cái Adapter chỉ mới có cái list => chưa có sự kiện click => tạo
         statusAdapter = new StatusAdapter(this, statusList);
         // truyền vào cái layout
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = 
+        new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(statusAdapter);
+        // scroll cuộn hay ho
+        recyclerView.setAdapter(new ScaleInAnimationAdapter(statusAdapter));
+
+        // căn lề xuất hiện đều ở giữa
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
+
+        SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);
+        snapHelperStart.attachToRecyclerView(recyclerView);
 
         retrofitService = RetrofitUtils.getInstance().createService(RetrofitService.class);
     }
@@ -192,30 +209,6 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
         });
     }
 
-    private void commentPost(Status status) {
-        // lấy các cmt về ?  =>
-        retrofitService.getAllComment(status.getPostId()).enqueue(new Callback<ArrayList<Comment>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
-
-                // trong này nếu lấy được thì đẩy vào trong 1 cái list
-                ArrayList<Comment> comments = response.body();
-                if (response.code() == 200 && !comments.isEmpty()) {
-                    Log.d("phi", comments.toString());
-                    Utils.showToast(getActivity(), "đúng rồi nhưng chưa làm chức năng này =))");
-                } else {
-                    Utils.showToast(getActivity(), "bài viết k có cmt ");
-                }
-                // nếu đúng =>
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
-                Utils.showToast(getActivity(), "Lỗi k lấy được cmt   ");
-            }
-        });
-    }
-
     private void likePost(Status status) {
         // tạo một cái sendForm truyên vào 2 gia trị của nó
         LikeStatustSendForm sendForm = new LikeStatustSendForm(user.getUserID(), status.getPostId());
@@ -256,7 +249,7 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
             @Override
             public void onResponse(Call<Status> call, Response<Status> response) {
                 Status res = response.body();
-                if (response.code() != 200 & res != null) {
+                if (response.code() == 200 & res != null) {
                     currentStatus.setContent(res.getContent());
                     // báo cho adapter biết dữ liệu đã thay đổi, cần kiến thiết lại
                     statusAdapter.notifyDataSetChanged();
@@ -296,13 +289,16 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
 
     @Override
     public void onLikeClick(Status status) {
-        // click vào thì nhảy sang adapter = > để làm gì đấy
         likePost(status);
     }
 
     @Override
     public void onCommentClick(Status status) {
-        commentPost(status);
+        Intent intent = new Intent(getActivity(), CommentActivity.class);
+        Log.d("bkhub", status.getPostId());
+        intent.putExtra("GetPostId", status.getPostId());
+        intent.putExtra("GetUserId", user.getUserID());
+        startActivity(intent);
     }
 
     @Override
