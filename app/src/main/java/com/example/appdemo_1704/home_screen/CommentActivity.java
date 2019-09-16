@@ -41,6 +41,8 @@ public class CommentActivity extends AppCompatActivity {
     EditText edtComment;
     ImageView ivSend, ivAva;
     UserInfo userInfo;
+    public final static int REQUEST_CODE = 1;
+    public final static int REQUEST_CODE_DETAIL = 2;
     CommentAdapter commentAdapter;
     ArrayList<Comment> commentList;
     final int MODE_NO_DATA = 1;

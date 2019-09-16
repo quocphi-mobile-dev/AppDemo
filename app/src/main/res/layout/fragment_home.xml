@@ -2,142 +2,120 @@
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/refresh_layout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
     tools:context=".home_screen.fragment.HomeFragment">
-    <android.support.v4.widget.NestedScrollView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorLightGreen01">
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding_5"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="1dp"
                 app:cardElevation="2dp">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_5">
+                    android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imv_avatar"
-                        android:layout_width="@dimen/width_90"
-                        android:layout_height="@dimen/height_100"
-                        android:layout_marginStart="@dimen/margin_10"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:src="@drawable/anh1"
-                        app:civ_border_color="@color/colorPrimary"
-                        app:civ_border_width="3dp" />
+                        android:id="@+id/newfeeds_ava"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="@dimen/margin10"
+                        android:src="@drawable/anh1" />
 
-                    <EditText
-                        android:id="@+id/edt_content"
-                        android:layout_width="@dimen/width_210"
-                        android:layout_height="@dimen/height_75"
-                        android:layout_marginStart="@dimen/margin_15"
-                        android:layout_marginLeft="@dimen/margin_10"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:layout_marginEnd="@dimen/margin_70"
-                        android:layout_marginRight="@dimen/margin_70"
-                        android:layout_toRightOf="@+id/imv_avatar"
-                        android:background="@drawable/custom_edittext_border2"
-                        android:hint="Ban Dang Nghi Gi"
-                        android:lines="4"
-                        android:paddingStart="@dimen/margin_10"
-                        android:paddingLeft="@dimen/margin_10"
-                        android:textSize="@dimen/text_size_18" />
+                    <TextView
+                        android:id="@+id/tv_post"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/margin20"
+                        android:background="@drawable/custom_edittext_bacgroud"
+                        android:paddingStart="@dimen/margin15"
+                        android:paddingTop="@dimen/margin10"
+                        android:paddingEnd="@dimen/margin15"
+                        android:text="What's on your mind?"
+                        android:textSize="@dimen/font20"
+                        android:layout_marginRight="@dimen/margin20" />
 
-                    <ImageView
-                        android:id="@+id/imv_post"
-                        android:layout_width="@dimen/width_35"
-                        android:layout_height="@dimen/height_45"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/margin_30"
-                        android:layout_marginEnd="@dimen/margin_10"
-                        android:layout_marginRight="@dimen/margin_10"
-                        android:background="@drawable/ic_send_black"
-                        android:padding="@dimen/padding_5" />
-                </RelativeLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin10"
+                >
+
+                <ViewFlipper
+                    android:id="@+id/flipper_story"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin20"
+                        android:indeterminateDrawable="@drawable/custom_progress_bar" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_story"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </ViewFlipper>
+
+            </ScrollView>
+
+            <ViewFlipper
+                android:id="@+id/flipper_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin5"
+                    android:indeterminateDrawable="@drawable/custom_progress_bar"
+                    android:paddingBottom="@dimen/margin10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin20"
+                    android:layout_marginBottom="@dimen/margin20"
+                    android:text="@string/no_data"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/font17" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </ViewFlipper>
         </LinearLayout>
-
-
-        <ViewFlipper
-            android:id="@+id/view_flipper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_15"
-                android:indeterminateDrawable="@drawable/custom_progress_bar" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_15"
-                android:text="Không có dữ liệu"
-                android:textColor="@color/colorGray900"
-                android:textSize="@dimen/textsize_15">
-
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_15"
-                android:text="Lỗi kết nối"
-                android:textColor="@color/colorAmber"
-                android:textSize="@dimen/textsize_15" />
-
-            <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginLeft="@dimen/margin_10">
-
-            </android.support.v7.widget.RecyclerView>
-
-
-        </ViewFlipper>
-
-    </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
+    </ScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

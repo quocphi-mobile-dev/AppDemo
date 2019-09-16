@@ -2,7 +2,12 @@ package com.example.appdemo_1704.json_models.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Status {
+import java.io.Serializable;
+import java.util.List;
+
+public class Status implements Serializable {
+    @SerializedName("images")
+    private List<String> images;
 
     @SerializedName("postId")
     private String postId;
@@ -30,7 +35,9 @@ public class Status {
 
     @SerializedName("isLike")
     private boolean isLike;
+ public Status(){
 
+ }
 
     public Status(String postId, String author, String authorName, String authorAvatar, String content,
                   String createDate, int numberLike, int numberComment, boolean isLike) {
@@ -43,6 +50,27 @@ public class Status {
         this.numberLike = numberLike;
         this.numberComment = numberComment;
         this.isLike = isLike;
+    }
+
+    public Status(List<String> images, String postId, String author, String authorName, String authorAvatar, String content, String createDate, int numberLike, int numberComment, boolean isLike) {
+        this.images = images;
+        this.postId = postId;
+        this.author = author;
+        this.authorName = authorName;
+        this.authorAvatar = authorAvatar;
+        this.content = content;
+        this.createDate = createDate;
+        this.numberLike = numberLike;
+        this.numberComment = numberComment;
+        this.isLike = isLike;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getPostId() {

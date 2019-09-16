@@ -52,4 +52,12 @@ public class RealmContext {
         userInfos.deleteAllFromRealm();
         realm.commitTransaction();
     }
+    public void upDateAvatar(String url){
+        realm.executeTransaction(realm1 -> {
+            UserInfo userInfo = getUser();
+            if (userInfo!= null){
+                userInfo.setAvatarUrL(url);
+            }
+        });
+    }
 }

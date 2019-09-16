@@ -12,29 +12,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.appdemo_1704.R;
-import com.example.appdemo_1704.common.UpdateStatusDialog;
 import com.example.appdemo_1704.dbcontext.RealmContext;
 import com.example.appdemo_1704.home_screen.CommentActivity;
+import com.example.appdemo_1704.home_screen.CreatePostActivity;
+import com.example.appdemo_1704.home_screen.UpdatePostActivity;
+import com.example.appdemo_1704.home_screen.ViewMyProfileActivity;
 import com.example.appdemo_1704.home_screen.adapter.StatusAdapter;
 import com.example.appdemo_1704.interf.OnItemStatusClickListener;
 import com.example.appdemo_1704.interf.OnUpdateDiaglogListener;
-import com.example.appdemo_1704.json_models.request.CreateStatusSendForm;
 import com.example.appdemo_1704.json_models.request.LikeStatustSendForm;
-import com.example.appdemo_1704.json_models.request.RegisterSendForm;
-import com.example.appdemo_1704.json_models.request.UpdateStatusSendForm;
-import com.example.appdemo_1704.json_models.response.Comment;
 import com.example.appdemo_1704.json_models.response.Status;
 import com.example.appdemo_1704.json_models.response.UserInfo;
 import com.example.appdemo_1704.network.RetrofitService;
@@ -52,24 +47,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements OnItemStatusClickListener, OnUpdateDiaglogListener {
-    CircleImageView imvAvata;
-    EditText edtContent;
-
-    ImageView imvSend;
-    SwipeRefreshLayout refreshLayout;
-    Status status;
-    RecyclerView recyclerView;
+    private RetrofitService retrofitService;
     ViewFlipper viewFlipper;
-    // Truyên vào ?
-    ArrayList<Status> statusList;
-    StatusAdapter statusAdapter;
+    RecyclerView recyclerView;
+    TextView tvPost;
     UserInfo user;
-    RetrofitService retrofitService;
-    private Status currentStatus;
+    StatusAdapter statusAdapter;
+    CircleImageView newfeesAvatar;
+    ArrayList<Status> statusList;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+
+    final int MODE_NO_DATA = 1;
+    final int MODE_RECYCYCLEVIEW = 2;
+    SwipeRefreshLayout refreshLayout;
+    int position = 0;
+    int positionDetail = 0;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,24 +80,13 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
         user = RealmContext.getInstance().getUser();
 
         if (user != null) {
-            Glide.with(getActivity()).load(user.getAvatarUrL()).into(imvAvata);
+            Glide.with(getActivity()).load(user.getAvatarUrL()).into(newfeesAvatar);
             getAllpost(user.getUserID());
         }
 
     }
 
     private void addListener() {
-        imvSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = edtContent.getText().toString();
-                if (content.isEmpty()) {
-                    Utils.showToast(getActivity(), "Bạn chưa nhập nội Dung");
-                } else {
-                    createPost(content);
-                }
-            }
-        });
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -112,27 +94,35 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
                 getAllpost(user.getUserID());
             }
         });
+        tvPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreatePostActivity.class);
+                startActivity(intent);
+            }
+        });
+        newfeesAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ViewMyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void init(View view) {
-
-        viewFlipper = view.findViewById(R.id.view_flipper);
-        recyclerView = view.findViewById(R.id.recycler_view);
-
-        imvAvata = view.findViewById(R.id.imv_avatar);
-        imvSend = view.findViewById(R.id.imv_post);
-        edtContent = view.findViewById(R.id.edt_content);
+        retrofitService = RetrofitUtils.getInstance().createService(RetrofitService.class);
+        viewFlipper = view.findViewById(R.id.flipper_status);
+        newfeesAvatar = view.findViewById(R.id.newfeeds_ava);
+        recyclerView = view.findViewById(R.id.rv_status);
+        tvPost = view.findViewById(R.id.tv_post);
+        newfeesAvatar = view.findViewById(R.id.newfeeds_ava);
         refreshLayout = view.findViewById(R.id.refresh_layout);
 
-
-// truyền cái list vào adapter  ===  5 dòng thần thánh
         statusList = new ArrayList<>();
-
-        // constructor chỉ mới có cái list thôi => cái Adapter chỉ mới có cái list => chưa có sự kiện click => tạo
         statusAdapter = new StatusAdapter(this, statusList);
-        // truyền vào cái layout
-        LinearLayoutManager linearLayoutManager = 
-        new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(statusAdapter);
@@ -146,28 +136,23 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
         SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);
         snapHelperStart.attachToRecyclerView(recyclerView);
 
-        retrofitService = RetrofitUtils.getInstance().createService(RetrofitService.class);
     }
 
     private void getAllpost(String userId) {
-
         retrofitService.getAllPost(userId).enqueue(new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
 
                 ArrayList<Status> statuses = (ArrayList<Status>) response.body();
                 if (response.code() == 200 && statuses != null) {
-                    if (statuses.isEmpty()) {
-                        viewFlipper.setDisplayedChild(1);
-
-                    } else {
+                    if (response.code() == 200 && statusList != null) {
                         statusList.clear();
                         statusList.addAll(statuses);
                         statusAdapter.notifyDataSetChanged();
-                        viewFlipper.setDisplayedChild(3);
+                        viewFlipper.setDisplayedChild(MODE_RECYCYCLEVIEW);
+                    } else {
+                        viewFlipper.setDisplayedChild(MODE_NO_DATA);
                     }
-                } else {
-                    viewFlipper.setDisplayedChild(2);
                 }
                 // khi get post về xong thì tắt đi
                 refreshLayout.setRefreshing(false);
@@ -176,49 +161,19 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
             @Override
             public void onFailure(Call<List<Status>> call, Throwable t) {
                 viewFlipper.setDisplayedChild(2);
-                // khi getPost về xong thi tắt đi
+
                 refreshLayout.setRefreshing(false);
             }
         });
     }
 
-    private void createPost(String content) {
-        CreateStatusSendForm sendForm = new CreateStatusSendForm(user.getUserID(), content);
-        retrofitService.createPost(sendForm).enqueue(new Callback<Status>() {
-            @Override
-            public void onResponse(Call<Status> call, Response<Status> response) {
-
-                Status status = response.body();
-                if (response.code() == 200 && status != null) {
-                    // status này sẽ add vào cái vị trí đầu tiên của statusList
-                    // chuyển dữ liệu bằng adapter
-                    // đưa cái ô text về rỗng
-                    statusList.add(0, status);
-                    statusAdapter.notifyDataSetChanged();
-                    edtContent.setText("");
-                    Utils.showToast(getActivity(), " Đăng bài thành công");
-                } else {
-                    Utils.showToast(getActivity(), " Đăng bài thất bại");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Status> call, Throwable t) {
-                Utils.showToast(getActivity(), " Đăng bài thất bại");
-            }
-        });
-    }
-
-    private void likePost(Status status) {
-        // tạo một cái sendForm truyên vào 2 gia trị của nó
+    private void likePost(int position, Status status) {
         LikeStatustSendForm sendForm = new LikeStatustSendForm(user.getUserID(), status.getPostId());
-        // gọi API của nó
         retrofitService.likePost(sendForm).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if (response.code() == 200) {
-
                     // set ngược cái statust này
                     status.setLike(!status.isLike());
                     // sau đó tăng hoặc giảm tương ứng
@@ -228,8 +183,7 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
                     } else {
                         status.setNumberLike(status.getNumberLike() - 1);
                     }
-                    // đổ dữ liệu vào
-                    statusAdapter.notifyDataSetChanged();
+                    statusAdapter.notifyItemChanged(position);
                 } else {
                     Utils.showToast(getActivity(), "Có Lỗi xảy ra");
                 }
@@ -239,29 +193,6 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
             public void onFailure(Call<Void> call, Throwable t) {
 
                 Utils.showToast(getActivity(), " Vui lòng kiểm tra lại kết nối");
-            }
-        });
-    }
-
-    private void updateStatus(String userID, String newContent, String postID) {
-        UpdateStatusSendForm sendForm = new UpdateStatusSendForm(userID, newContent);
-        retrofitService.updateStatus(postID, sendForm).enqueue(new Callback<Status>() {
-            @Override
-            public void onResponse(Call<Status> call, Response<Status> response) {
-                Status res = response.body();
-                if (response.code() == 200 & res != null) {
-                    currentStatus.setContent(res.getContent());
-                    // báo cho adapter biết dữ liệu đã thay đổi, cần kiến thiết lại
-                    statusAdapter.notifyDataSetChanged();
-                    Utils.showToast(getContext(), "Chỉnh sửa thành công !");
-                } else {
-                    Utils.showToast(getContext(), "Chỉnh sửa thất bại !");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Status> call, Throwable t) {
-                Utils.showToast(getContext(), "Chỉnh sửa thất bại !");
             }
         });
     }
@@ -288,17 +219,8 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
     }
 
     @Override
-    public void onLikeClick(Status status) {
-        likePost(status);
-    }
-
-    @Override
-    public void onCommentClick(Status status) {
-        Intent intent = new Intent(getActivity(), CommentActivity.class);
-        Log.d("bkhub", status.getPostId());
-        intent.putExtra("GetPostId", status.getPostId());
-        intent.putExtra("GetUserId", user.getUserID());
-        startActivity(intent);
+    public void onLikeClick(int position, Status status) {
+        likePost(position, status);
     }
 
     @Override
@@ -318,17 +240,38 @@ public class HomeFragment extends Fragment implements OnItemStatusClickListener,
                 .show();
     }
 
-
     @Override
-    public void onEditStatus(Status status) {
-        currentStatus = status;
-        UpdateStatusDialog statusDialog = new UpdateStatusDialog(getContext(), this);
-        statusDialog.getContent(status.getContent());
-        statusDialog.show();
+    public void onDetailImage(int positionAdapter, int positionImage, Status status) {
+        // chưa cần làm
     }
 
     @Override
     public void onSaveClick(String newContent) {
-        updateStatus(user.getUserID(), newContent, currentStatus.getPostId());
+
     }
+
+    @Override
+    public void onCommentClick(int position, Status status) {
+        this.position = position;
+        Intent intent = new Intent(getActivity(), CommentActivity.class);
+        // intent.putExtra(Constant.GetStatusForDetail, status);
+        startActivityForResult(intent, CommentActivity.REQUEST_CODE);
+        //ĐOẠN NÀY NÊN DÙNG ACTIVITY FOR RESULT ĐỂ TỐI ƯU VÀ GIẢM TẢI LÊN API
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onEditStatus(Status status) {
+        ArrayList<String> images = new ArrayList<>();
+        images.addAll(status.getImages());
+        Intent intent = new Intent(getActivity(), UpdatePostActivity.class);
+        // intent.putExtra(Constant.GetStatusForDetail, (Serializable) status);
+        startActivity(intent);
+    }
+
 }

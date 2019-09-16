@@ -26,7 +26,21 @@
     <dimen name="width_90">90dp</dimen>
     <dimen name="height_100">100dp</dimen>
     <dimen name="text_size_13">13sp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin5">5dp</dimen>
+    <dimen name="margin15">15dp</dimen>
+    <dimen name="margin20">20dp</dimen>
+    <dimen name="font17">17sp</dimen>
+    <dimen name="margin40">40dp</dimen>
+    <dimen name="margin50">50dp</dimen>
+    <dimen name="font20">20sp</dimen>
+    <dimen name="margin10">10dp</dimen>
+    <dimen name="margin30">30dp</dimen>
+    <dimen name="font15">15sp</dimen>
+    <dimen name="font25">25sp</dimen>
+    <dimen name="font23">23sp</dimen>
+    <dimen name="margin2">2dp</dimen>
 
 
 </resources>

@@ -16,15 +16,6 @@ public class UpdateStatusDialog extends Dialog {
     EditText editText;
     Button btn_save;
     Button btn_cancel;
-
-
-
-
-
-
-
-
-
     OnUpdateDiaglogListener listener;
 
     public UpdateStatusDialog(@NonNull Context context, OnUpdateDiaglogListener listener) {
@@ -54,21 +45,22 @@ public class UpdateStatusDialog extends Dialog {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // thực hiện hủy
                 UpdateStatusDialog.this.dismiss();
             }
         });
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // thực hiện gọi API để xóa
                 if (!editText.getText().toString().isEmpty()) {
                     listener.onSaveClick(editText.getText().toString());
                 }
                 UpdateStatusDialog.this.dismiss();
             }
         });
+    }
 
+    public void setContent(String content){
+        editText.setText(content);
     }
 
 }

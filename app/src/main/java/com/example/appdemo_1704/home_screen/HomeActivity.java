@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.example.appdemo_1704.R;
 import com.example.appdemo_1704.home_screen.adapter.ViewPageAdapterHome;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPageAdapterHome viewPageAdapterHome;
@@ -49,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         public void onTabReselected(TabLayout.Tab tab) {
             super.onTabReselected(tab);
         }
+        
     }
     );
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.appdemo_1704.R;
@@ -25,15 +27,18 @@ import com.example.appdemo_1704.json_models.response.UserInfo;
 import com.example.appdemo_1704.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHolder>{
+import static java.lang.String.valueOf;
+
+public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHolder> {
     private OnItemStatusClickListener listener;
-      UserInfo userInfo;
+    UserInfo userInfo;
     ArrayList<Status> statusList;
 
-    public StatusAdapter(OnItemStatusClickListener listener, ArrayList<Status> statusList ) {
+    public StatusAdapter(OnItemStatusClickListener listener, ArrayList<Status> statusList) {
         this.listener = listener;
         this.statusList = statusList;
         userInfo = RealmContext.getInstance().getUser();
@@ -41,70 +46,85 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHold
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public StatusAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // căng lên
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_item_status,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_item_status, viewGroup, false);
         return new MyViewHolder(view);
     }
+
     @Override
     public int getItemCount() {
         return statusList.size();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.bindView(statusList.get(i));
-
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         Status status;
-        LinearLayout itemlike;
-        LinearLayout itemCmt;
         Context context;
-        TextView tvContent;
         CircleImageView imageView;
         TextView tvFullName;
         TextView tvCreateDate;
+        TextView tvContent;
         TextView tvNumberLike;
         TextView tvNumberCmt;
         ImageView imvLike;
         TextView tvLike;
-        TextView tvMenu;
+        LinearLayout itemLike, itemComment;
+        TextView tv_menu;
+        ViewFlipper viewFlipper;
+        List<String> imageList;
+        ImageView ivOne, ivTwo1, ivTwo2, ivThree1, ivThree2, ivThree3;
+        ImageView ivFour1, ivFour2, ivFour3, ivFour4, ivFive1, ivFive2, ivFive3, ivFive4, ivFive5;
+        View viewGrey;
+        TextView tvNumberImage;
+        RelativeLayout layoutIv5;
+        LinearLayout layoutCmt;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
 
             init(itemView);
-             addListener();
+            addListener();
         }
-        private void  addListener(){
-            itemlike.setOnClickListener(new View.OnClickListener() {
+
+        private void addListener() {
+            itemLike.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View v) {
-                    listener.onLikeClick(status);
+                    listener.onLikeClick(getAdapterPosition(), status);
+                    if (status.isLike()) {
+                        imvLike.setBackground(context.getResources().getDrawable(R.drawable.ic_like));
+                        tvNumberLike.setText(valueOf(Integer.parseInt(tvNumberLike.getText().toString()) - 1));
+                        tvLike.setTextColor(context.getResources().getColor(R.color.black));
+
+                    } else {
+                        imvLike.setBackground(context.getResources().getDrawable(R.drawable.ic_like));
+                        tvNumberLike.setText(valueOf(Integer.parseInt(tvNumberLike.getText().toString()) + 1));
+                        tvLike.setTextColor(context.getResources().getColor(R.color.red));
+                    }
                 }
             });
 
-            itemCmt.setOnClickListener(new View.OnClickListener() {
+            tv_menu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onCommentClick(status);
-                }
-            });
-            tvMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(context,tvMenu);
+                    android.widget.PopupMenu popupMenu = new android.widget.PopupMenu(context, tv_menu);
                     popupMenu.inflate(R.menu.status_option__menu);
+                    popupMenu.show();
 
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch (menuItem.getItemId()){
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
                                 case R.id.option_edit:
-                                   listener.onEditStatus(status);
+                                    listener.onEditStatus(status);
                                     break;
                                 case R.id.option_delete:
                                     listener.onDeleteStatus(status);
@@ -113,59 +133,144 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.MyViewHold
                             return false;
                         }
                     });
-                    popupMenu.show();
+                }
+            });
+
+            layoutCmt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onCommentClick(getAdapterPosition(), status);
+                }
+            });
+
+            itemComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onCommentClick(getAdapterPosition(), status);
                 }
             });
         }
 
-        private  void  init(View itemview){
+        private void init(View itemview) {
+            imageView = itemView.findViewById(R.id.iv_ava);
+            tvFullName = itemView.findViewById(R.id.tv_username);
+            tvCreateDate = itemView.findViewById(R.id.tv_datetime);
             tvContent = itemView.findViewById(R.id.tv_content);
-            imageView = itemView.findViewById(R.id.imv_profile);
-            tvCreateDate = itemView.findViewById(R.id.tv_createDate);
-            tvFullName = itemView.findViewById(R.id.tv_fullName);
-
-            tvNumberLike = itemView.findViewById(R.id.tv_number_like);
-            tvNumberCmt = itemView.findViewById(R.id.tv_number_comment);
-            imvLike = itemView.findViewById(R.id.imv_like);
+            tvNumberLike = itemView.findViewById(R.id.tv_numberLike);
+            tvNumberCmt = itemView.findViewById(R.id.tv_countComment);
+            imvLike = itemView.findViewById(R.id.iv_like);
             tvLike = itemView.findViewById(R.id.tv_like);
-            // ánh xạ cho sự kiện like
-            itemlike = itemView.findViewById(R.id.item_like);
-            itemCmt = itemView.findViewById(R.id.item_comment);
-             tvMenu = itemview.findViewById(R.id.tv_menu);
+            itemLike = itemView.findViewById(R.id.itemLike);
+            tv_menu = itemView.findViewById(R.id.tv_menu);
+            itemComment = itemView.findViewById(R.id.itemComment);
+            viewFlipper = itemView.findViewById(R.id.view_flipper);
+            ivOne = itemView.findViewById(R.id.iv_one);
+            ivTwo1 = itemView.findViewById(R.id.iv_two_1);
+            ivTwo2 = itemView.findViewById(R.id.iv_two_2);
+            ivThree1 = itemView.findViewById(R.id.iv_three_1);
+            ivThree2 = itemView.findViewById(R.id.iv_three_2);
+            ivThree3 = itemView.findViewById(R.id.iv_three_3);
+            ivFour1 = itemView.findViewById(R.id.iv_four_1);
+            ivFour2 = itemView.findViewById(R.id.iv_four_2);
+            ivFour3 = itemView.findViewById(R.id.iv_four_3);
+            ivFour4 = itemView.findViewById(R.id.iv_four_4);
+            ivFive1 = itemView.findViewById(R.id.iv_five_1);
+            ivFive2 = itemView.findViewById(R.id.iv_five_2);
+            ivFive3 = itemView.findViewById(R.id.iv_five_3);
+            ivFive4 = itemView.findViewById(R.id.iv_five_4);
+            ivFive5 = itemView.findViewById(R.id.iv_five_5);
+            layoutIv5 = itemView.findViewById(R.id.layout_iv5);
+            layoutCmt = itemView.findViewById(R.id.layout_cmt);
+
+            viewGrey = itemView.findViewById(R.id.view_grey);
+            tvNumberImage = itemView.findViewById(R.id.tv_numberImage);
 
         }
+
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 
-        private void bindView(Status status){
+        private void bindView(Status status) {
             // giữ lại status để dùng
             this.status = status;
+            if (status.getAuthorAvatar() != null) {
+                Glide.with(context).load(status.getAuthorAvatar()).into(imageView);
+            } else {
+                imageView.setBackgroundResource(R.drawable.anh1);
+            }
 
-            tvContent.setText(status.getContent());
             tvFullName.setText(status.getAuthorName());
             tvCreateDate.setText(status.getCreateDate());
-            tvNumberLike.setText(String.valueOf(status.getNumberLike()));
-            tvNumberCmt.setText(String.format("%s Bình luận",status.getNumberComment()));
-            // set Avarta
-            Glide.with(context).load(status.getAuthorAvatar()).into(imageView);
+            tvContent.setText(status.getContent());
+            tvNumberLike.setText(valueOf(status.getNumberLike()));
+            tvNumberCmt.setText(String.format("%s", status.getNumberComment()));
 
-            if(status.isLike()){
-                // set baground cần context  => set cái ảnh màu hồng
+
+            if (!status.getAuthor().equals(userInfo.getUserName())) {
+                tv_menu.setVisibility(View.INVISIBLE);
+            } else {
+                tv_menu.setVisibility(View.VISIBLE);
+            }
+
+            if (status.isLike()) {
                 imvLike.setBackground(context.getResources().getDrawable(R.drawable.ic_like));
-                tvLike.setTextColor(context.getResources().getColor(R.color.colorRed400));
-            }
-            else {
+                tvLike.setTextColor(context.getResources().getColor(R.color.red));
+            } else {
                 imvLike.setBackground(context.getResources().getDrawable(R.drawable.ic_dont_like));
-                tvLike.setTextColor(context.getResources().getColor(R.color.colorGray900));
+                tvLike.setTextColor(context.getResources().getColor(R.color.black));
+            }
 
-            }
-            // getInstance trả về thể hiện
-            if(status.getAuthor().equals(userInfo.getUserName())){
-                tvMenu.setVisibility(View.VISIBLE);
-            }else {
-                tvMenu.setVisibility(View.GONE);
-            }
+            imageList = new ArrayList<>();
+            imageList = status.getImages();
+            if (imageList != null) {
+                if (imageList.size() > 0) {
+                    viewFlipper.setVisibility(View.VISIBLE);
+
+                    if (imageList.size() == 1) {
+                        viewFlipper.setDisplayedChild(0);
+                        Glide.with(context).load(imageList.get(0)).into(ivOne);
+                    } else if (imageList.size() == 2) {
+                        viewFlipper.setDisplayedChild(1);
+                        Glide.with(context).load(imageList.get(0)).into(ivTwo1);
+                        Glide.with(context).load(imageList.get(1)).into(ivTwo2);
+                    } else if (imageList.size() == 3) {
+                        viewFlipper.setDisplayedChild(2);
+                        Glide.with(context).load(imageList.get(0)).into(ivThree1);
+                        Glide.with(context).load(imageList.get(1)).into(ivThree2);
+                        Glide.with(context).load(imageList.get(2)).into(ivThree3);
+                    } else if (imageList.size() == 4) {
+                        viewFlipper.setDisplayedChild(3);
+                        Glide.with(context).load(imageList.get(0)).into(ivFour1);
+                        Glide.with(context).load(imageList.get(1)).into(ivFour2);
+                        Glide.with(context).load(imageList.get(2)).into(ivFour3);
+                        Glide.with(context).load(imageList.get(3)).into(ivFour4);
+                    } else if (imageList.size() == 5) {
+                        viewFlipper.setDisplayedChild(4);
+                        Glide.with(context).load(imageList.get(0)).into(ivFive1);
+                        Glide.with(context).load(imageList.get(1)).into(ivFive2);
+                        Glide.with(context).load(imageList.get(2)).into(ivFive3);
+                        Glide.with(context).load(imageList.get(3)).into(ivFive4);
+                        Glide.with(context).load(imageList.get(4)).into(ivFive5);
+                    } else {
+                        viewFlipper.setDisplayedChild(4);
+                        Glide.with(context).load(imageList.get(0)).into(ivFive1);
+                        Glide.with(context).load(imageList.get(1)).into(ivFive2);
+                        Glide.with(context).load(imageList.get(2)).into(ivFive3);
+                        Glide.with(context).load(imageList.get(3)).into(ivFive4);
+                        Glide.with(context).load(imageList.get(4)).into(ivFive5);
+
+                        viewGrey.setVisibility(View.VISIBLE);
+                        tvNumberImage.setVisibility(View.VISIBLE);
+                        tvNumberImage.setText("+" + (imageList.size() - 4));
+                    }
+
+                } else {
+                    viewFlipper.setVisibility(View.GONE);
+                }
+            } else {
+                viewFlipper.setVisibility(View.GONE);
+
         }
-
+    }
     }
 }

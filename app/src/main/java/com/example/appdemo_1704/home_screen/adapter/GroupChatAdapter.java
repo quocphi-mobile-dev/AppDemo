@@ -32,7 +32,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
     @NonNull
     @Override
     public GroupChatAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflater;
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_item_groupchat, viewGroup, false);
         return new ViewHolder(view);
     }
@@ -66,14 +65,12 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
             this.groupChat = groupChat;
             userInfors = groupChat.getUsers();
             avas = new String[userInfors.size()];
-
 //            if(groupChat.getLastMessage() == null){
 //                tvLassMess.setVisibility(View.INVISIBLE);
 //            } else {
 //                tvLassMess.setVisibility(View.VISIBLE);
 //                tvLassMess.setText(groupChat.getLastMessage());
 //            }
-
 
             for (int i = 0;i<userInfors.size();i++){
                 avas[i] = userInfors.get(i).getAvatarUrL();
