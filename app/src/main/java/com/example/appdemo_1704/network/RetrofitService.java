@@ -5,8 +5,10 @@ import com.example.appdemo_1704.json_models.request.CreateStatusSendForm;
 import com.example.appdemo_1704.json_models.request.LikeStatustSendForm;
 import com.example.appdemo_1704.json_models.request.LoginSendForm;
 import com.example.appdemo_1704.json_models.request.UpdateAvatarUri;
+import com.example.appdemo_1704.json_models.response.Avatar;
 import com.example.appdemo_1704.json_models.response.CommentResponse;
 import com.example.appdemo_1704.json_models.response.GroupChat;
+import com.example.appdemo_1704.json_models.response.Message;
 import com.example.appdemo_1704.json_models.response.ProfileUser;
 import com.example.appdemo_1704.json_models.request.RegisterSendForm;
 import com.example.appdemo_1704.json_models.request.UpdateStatusSendForm;
@@ -40,7 +42,7 @@ public interface RetrofitService {
 
     @GET(API.GET_ALL_POST)
     @Headers({API.HEADER})
-    Call<List<Status>> getAllPost(@Query("userId") String userID);
+    Call<List<Status>> getAllPost(@Query("userId") String userId);
 
     @POST(API.CREATE_POST)
     @Headers({API.HEADER})
@@ -50,7 +52,6 @@ public interface RetrofitService {
 
     @POST(API.LIKE_POST)
     @Headers({API.HEADER})
-        // trả về => truyền lên >
     Call<Void> likePost(@Body LikeStatustSendForm sendForm);
 
     @GET(API.GET_ALL_FRIEND)
@@ -68,7 +69,8 @@ public interface RetrofitService {
     // update avatar
     @PUT(API.UPDATE_AVATAR)
     @Headers({API.HEADER})
-    Call<ProfileUser> upDateAvatar (@Body UpdateAvatarUri sendAvatarUri);
+    Call<Avatar> upDateAvatar (@Query("userId")String userId, @Body UpdateAvatarUri sendAvatarUri);
+
 
     // create commmet
     @POST(API.CREATE_COMMENT)
@@ -82,5 +84,9 @@ public interface RetrofitService {
     // get group
     @GET(API.GET_GROUP)
     Call<ArrayList<GroupChat>> getGroup(@Query("userId") String userId);
+    // get all messager
+    @GET(API.GET_ALL_MESSAGE)
+    Call<List<Message>> getAllMessage(@Query("groupId") String groupId);
+    // update avatar
 
 }

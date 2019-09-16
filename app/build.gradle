@@ -45,4 +45,30 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
     implementation 'com.github.rubensousa:gravitysnaphelper:1.5'
 
+    implementation 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+}
+
+
+
+dependencies {
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
+}
+
+//Android - Font Awesome Icon
+dependencies {
+    implementation 'info.androidhive:fontawesome:0.0.5'
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }

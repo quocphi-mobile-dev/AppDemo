@@ -1,15 +1,20 @@
 package com.example.appdemo_1704.home_screen.fragment;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +22,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +33,8 @@ import com.example.appdemo_1704.dbcontext.RealmContext;
 import com.example.appdemo_1704.home_screen.CommentActivity;
 import com.example.appdemo_1704.home_screen.adapter.StatusAdapter;
 import com.example.appdemo_1704.interf.OnItemStatusClickListener;
+import com.example.appdemo_1704.json_models.request.UpdateAvatarUri;
+import com.example.appdemo_1704.json_models.response.Avatar;
 import com.example.appdemo_1704.json_models.response.ProfileUser;
 import com.example.appdemo_1704.json_models.response.Status;
 import com.example.appdemo_1704.json_models.response.UserInfo;
@@ -35,7 +42,6 @@ import com.example.appdemo_1704.network.RetrofitService;
 import com.example.appdemo_1704.network.RetrofitUtils;
 import com.example.appdemo_1704.utils.Utils;
 import com.glide.slider.library.SliderLayout;
-import com.glide.slider.library.SliderTypes.DefaultSliderView;
 import com.glide.slider.library.SliderTypes.TextSliderView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,10 +82,6 @@ public class ProfileFragment extends Fragment implements OnItemStatusClickListen
     public static final int REQUEST_PERMISSION_CODE = 1;
     public static final int REQUEST_GET_IMAGE_CODE = 2;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,9 +91,7 @@ public class ProfileFragment extends Fragment implements OnItemStatusClickListen
         storageReference = FirebaseStorage.getInstance().getReference();
         addListener();
         getProfile(userInfor.getUserName(),userInfor.getUserID());
-
         return view;
-
 
     }
 
@@ -188,14 +188,51 @@ public class ProfileFragment extends Fragment implements OnItemStatusClickListen
     }
 
     private void addListener() {
-        ivAva.setOnClickListener(new View.OnClickListener() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                openGalary();
+            public void onRefresh() {
+                getProfile(userInfor.getUserName(), userInfor.getUserID());
             }
         });
-    }
+        ivCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ensurePermission();
+            }
+        });
 
+        
+
+    }
+    private void ensurePermission(){
+        listPermissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+        if(checkPermission(getActivity(), listPermissions)){
+            openGalary();
+        }else {
+            requestPermissions(listPermissions, REQUEST_PERMISSION_CODE);
+        }
+    }
+    private boolean checkPermission(Context context, String[] listPermission) {
+        if (context != null && listPermission != null) {
+            for (String permission : listPermission) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_GET_IMAGE_CODE){
+            if(checkPermission(getActivity(), listPermissions)){
+                openGalary();
+            }
+        } else{
+            Utils.showToast(getActivity(), "Request is denied!");
+        }
+    }
     private void openGalary() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
@@ -227,31 +264,41 @@ public class ProfileFragment extends Fragment implements OnItemStatusClickListen
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
+                    Utils.showToast(getActivity(),"Up load thành công");
                     // thành công
+                    // thực hiện update avata.
+                    updateAvatar(task.getResult().toString());
                     Log.d("phi", task.getResult().toString());
                 } else {
                     // thất bại
-                    Toast.makeText(getContext(), "Thất bại ", Toast.LENGTH_SHORT).show();
+                    Utils.showToast(getActivity(),"Update thất bại");
                 }
             }
         });
+    }
+    private  void  updateAvatar(String avatarUrl){
+        UpdateAvatarUri avatarSend = new UpdateAvatarUri(avatarUrl);
+        retrofitService.upDateAvatar(userInfor.getUserID(), avatarSend).enqueue(new Callback<Avatar>() {
+            @Override
+            public void onResponse(Call<Avatar> call, Response<Avatar> response) {
+                Avatar avatarRes = response.body();
+                if(response.code() == 200 && avatarRes != null){
+                    RealmContext.getInstance().upDateAvatar(avatarRes.getAvatarUrl());
+                } else {
+                    Utils.showToast(getActivity(), "This is fail while getting image!");
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Avatar> call, Throwable t) {
+                Utils.showToast(getActivity(), "No Internet!");
+            }
+        });
+
+        
     }
 
 
-    @Override
-    public void onLikeClick(Status status) {
-
-    }
-
-    @Override
-    public void onCommentClick(Status status) {
-        Intent intent = new Intent(getActivity(), CommentActivity.class);
-        intent.putExtra("GetPostId", status.getPostId());
-        intent.putExtra("GetUserId", userInfor.getUserID());
-        startActivity(intent);
-
-    }
 
     @Override
     public void onDeleteStatus(Status status) {
@@ -259,7 +306,24 @@ public class ProfileFragment extends Fragment implements OnItemStatusClickListen
     }
 
     @Override
+    public void onDetailImage(int positionAdapter, int positionImage, Status status) {
+
+    }
+
+    @Override
+    public void onLikeClick(int position, Status status) {
+
+    }
+
+    @Override
+    public void onCommentClick(int position, Status status) {
+
+    }
+
+    @Override
     public void onEditStatus(Status status) {
 
     }
+
+
 }

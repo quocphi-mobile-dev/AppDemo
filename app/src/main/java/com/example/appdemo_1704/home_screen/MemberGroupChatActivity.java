@@ -24,8 +24,6 @@ public class MemberGroupChatActivity extends AppCompatActivity {
     ViewFlipper  viewFlipper;
     TextView tvNameGroup;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
